@@ -164,7 +164,7 @@ class Generator
 
             $magicMethods = array_key_exists($name, $this->magic) ? $this->magic[$name] : [];
             $alias = new Alias($this->config, $name, $facade, $magicMethods, $this->interfaces);
-            if ($alias->isValid()) {
+            if ($alias->isValid() && count($alias->getMethods()) != 0) {
                 //Add extra methods, from other classes (magic static calls)
                 if (array_key_exists($name, $this->extra)) {
                     $alias->addClass($this->extra[$name]);
