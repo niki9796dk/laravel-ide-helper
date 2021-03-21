@@ -1183,6 +1183,10 @@ class ModelsCommand extends Command
 
     protected function getClassNameInDestinationFile(object $model, string $className): string
     {
+        if ($className == 'Eloquent') {
+            return sprintf('\Eloquent');
+        }
+
         $reflection = $model instanceof ReflectionClass
             ? $model
             : new ReflectionObject($model)
