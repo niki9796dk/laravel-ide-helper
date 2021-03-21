@@ -174,9 +174,7 @@ class Generator
             }
         }
 
-        return $aliases->reject(function (Alias $alias) {
-            return $alias->getNamespace() == '__root';
-        });
+        return $aliases;
     }
 
     /**
@@ -204,6 +202,8 @@ class Generator
     {
         return $this->getValidAliases()->groupBy(function (Alias $alias) {
             return $alias->getNamespace();
+        })->reject(function (Alias $alias) {
+            return $this->config->get('ide-helper.no_root', false) && $alias->getNamespace() == '__root';
         });
     }
 
