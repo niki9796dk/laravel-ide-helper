@@ -163,7 +163,7 @@ class ModelsCommand extends Command
 
         if ($this->write_mixin) {
             /** @var Generator $generator */
-            $generator = resolve(Generator::class);
+            $generator = resolve('command.ide-helper.generate');
 
             $eloquent = $this->view->make('eloquent')
                 ->with('eloquent_by_alias_ns', $generator->getEloquentAlias())
