@@ -200,11 +200,13 @@ class Generator
      */
     protected function getAliasesByAliasNamespace()
     {
-        return $this->getValidAliases()->groupBy(function (Alias $alias) {
-            return $alias->getNamespace();
-        })->reject(function (Alias $alias) {
-            return $this->config->get('ide-helper.no_root', false) && $alias->getNamespace() == '__root';
-        });
+        return $this->getValidAliases()
+            ->reject(function (Alias $alias) {
+                return $this->config->get('ide-helper.no_root', false) && $alias->getNamespace() == '__root';
+            })
+            ->groupBy(function (Alias $alias) {
+                return $alias->getNamespace();
+            });
     }
 
     protected function getAliases()
