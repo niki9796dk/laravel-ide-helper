@@ -110,13 +110,18 @@ class ModelsCommand extends Command
      */
     protected $dateClass;
 
+    /** @var \Illuminate\View\Factory */
+    protected $view;
+
     /**
      * @param Filesystem $files
+     * @param \Illuminate\View\Factory $view
      */
-    public function __construct(Filesystem $files)
+    public function __construct(Filesystem $files, /* Illuminate\View\Factory */ $view)
     {
         parent::__construct();
         $this->files = $files;
+        $this->view = $view;
     }
 
     /**
