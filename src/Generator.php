@@ -174,7 +174,9 @@ class Generator
             }
         }
 
-        return $aliases;
+        return $aliases->reject(function (Alias $alias) {
+            return $alias->getNamespace() == '__root';
+        });
     }
 
     /**

@@ -100,6 +100,9 @@ class GeneratorCommand extends Command
             $this->useMemoryDriver();
         }
 
+        if ($this->option('no-root')) {
+            $this->config->set('ide-helper.no_root', true);
+        }
 
         $helpers = '';
         if ($this->option('helpers') || ($this->config->get('ide-helper.include_helpers'))) {
