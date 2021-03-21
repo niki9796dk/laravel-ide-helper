@@ -167,8 +167,7 @@ class ModelsCommand extends Command
             : '\Illuminate\Support\Carbon';
 
         if ($this->write_mixin) {
-            /** @var Generator $generator */
-            $generator = resolve('command.ide-helper.generate');
+            $generator = new Generator(resolve('config'), $this->view);
 
             $eloquent = $this->view->make('eloquent')
                 ->with('eloquent_by_alias_ns', $generator->getEloquentAlias())
