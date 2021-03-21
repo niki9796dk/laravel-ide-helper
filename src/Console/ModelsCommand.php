@@ -166,17 +166,15 @@ class ModelsCommand extends Command
             ? '\\' . get_class(\Illuminate\Support\Facades\Date::now())
             : '\Illuminate\Support\Carbon';
 
+        $content = $this->generateDocs($model, $ignore);
+
         if ($this->write_mixin) {
             $generator = new Generator(resolve('config'), $this->view);
 
-            $eloquent = $this->view->make('eloquent')
+            $content .= $this->view->make('eloquent')
                 ->with('eloquent_by_alias_ns', $generator->getEloquentAlias())
                 ->render();
-
-            $this->files->put('_ide_helper_eloquent.php', $eloquent);
         }
-
-        $content = $this->generateDocs($model, $ignore);
 
         if (!$this->write || $this->write_mixin) {
             $written = $this->files->put($filename, $content);

@@ -1,4 +1,3 @@
-<?= '<?php' ?>
 <?php
 /**
  * @var \Barryvdh\LaravelIdeHelper\Alias[][] $eloquent_by_alias_ns
