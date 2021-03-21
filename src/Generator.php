@@ -217,8 +217,7 @@ class Generator
         return $this->getValidAliases()
             ->reject(function (Alias $alias) {
                 return $this->config->get('ide-helper.no_root', false)
-                    && $alias->getNamespace() == '__root'
-                    && $alias->getAlias() != 'Eloquent';
+                    && $alias->getNamespace() == '__root';
             })
             ->groupBy(function (Alias $alias) {
                 return $alias->getNamespace();

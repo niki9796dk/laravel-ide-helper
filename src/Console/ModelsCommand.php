@@ -168,14 +168,6 @@ class ModelsCommand extends Command
 
         $content = $this->generateDocs($model, $ignore);
 
-        if ($this->write_mixin) {
-            $generator = new Generator(resolve('config'), $this->view);
-
-            $content .= $this->view->make('eloquent')
-                ->with('eloquent_by_alias_ns', $generator->getEloquentAlias())
-                ->render();
-        }
-
         if (!$this->write || $this->write_mixin) {
             $written = $this->files->put($filename, $content);
             if ($written !== false) {
@@ -238,6 +230,14 @@ class ModelsCommand extends Command
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  */
 \n\n";
+
+        if ($this->write_mixin) {
+            $generator = new Generator(resolve('config'), $this->view);
+
+            $output .= $this->view->make('eloquent')
+                ->with('eloquent_by_alias_ns', $generator->getEloquentAlias())
+                ->render();
+        }
 
         $hasDoctrine = interface_exists('Doctrine\DBAL\Driver');
 
