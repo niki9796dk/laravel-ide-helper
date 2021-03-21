@@ -12,6 +12,8 @@
 namespace Barryvdh\LaravelIdeHelper\Console;
 
 use Barryvdh\Reflection\DocBlock;
+use Barryvdh\LaravelIdeHelper\Factories;
+use Barryvdh\LaravelIdeHelper\Generator;
 use Barryvdh\Reflection\DocBlock\Context;
 use Barryvdh\Reflection\DocBlock\Serializer as DocBlockSerializer;
 use Barryvdh\Reflection\DocBlock\Tag;
@@ -158,6 +160,17 @@ class ModelsCommand extends Command
         $this->dateClass = class_exists(\Illuminate\Support\Facades\Date::class)
             ? '\\' . get_class(\Illuminate\Support\Facades\Date::now())
             : '\Illuminate\Support\Carbon';
+
+        if ($this->write_mixin) {
+            /** @var Generator $generator */
+            $generator = resolve(Generator::class);
+
+            $eloquent = $this->view->make('eloquent')
+                ->with('eloquent_by_alias_ns', $generator->getEloquentAlias())
+                ->render();
+
+            $this->files->put('_ide_helper_eloquent.php', $eloquent);
+        }
 
         $content = $this->generateDocs($model, $ignore);
 

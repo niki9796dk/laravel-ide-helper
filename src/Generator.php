@@ -179,6 +179,18 @@ class Generator
         return $aliases;
     }
 
+    public function getEloquentAlias()
+    {
+        return $this
+            ->getValidAliases()
+            ->filter(function (Alias $alias) {
+                return $alias->getAlias() == 'Eloquent';
+            })
+            ->groupBy(function (Alias $alias) {
+                return $alias->getNamespace();
+            });
+    }
+
     /**
      * Regroup aliases by namespace of extended classes
      *
@@ -200,7 +212,7 @@ class Generator
      *
      * @return Collection
      */
-    protected function getAliasesByAliasNamespace()
+    public function getAliasesByAliasNamespace()
     {
         return $this->getValidAliases()
             ->reject(function (Alias $alias) {
